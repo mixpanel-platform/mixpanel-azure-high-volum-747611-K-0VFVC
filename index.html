@@ -26,7 +26,7 @@
       unit:'day'
     }
     
-    var denominator = MP.api.segment('InitilializeExtensions', startParams)
+    var denominator = MP.api.segment('InitializeExtensions', startParams)
     var numerator = MP.api.segment('$custom_event:84493', errorParams) 
     
     $.when(denominator, numerator).done(function(divisor, dividend){
