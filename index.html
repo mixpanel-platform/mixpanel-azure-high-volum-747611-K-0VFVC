@@ -34,7 +34,8 @@
     $.when(denominator, numerator).done(function(divisor, dividend){
       var data = dividend.divide(divisor);
       console.log(data.values())
-      $('#chart').MPChart('setData', data);
+      var chart = $('#chart').MPChart();
+      chart.MPChart('setData', data);
     });// Run queries and display results here
     </script>
   </body>
