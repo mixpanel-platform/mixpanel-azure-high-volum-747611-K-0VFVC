@@ -30,8 +30,8 @@
     var numerator = MP.api.segment('$custom_event:84493', errorParams) 
     
     $.when(denominator, numerator).done(function(divisor, dividend){
-      divisor.divide(dividend);
-      console.log(dividend)
+      var data = dividend.divide(divisor);
+      console.log(data.values())
       debugger;
     });// Run queries and display results here
     </script>
