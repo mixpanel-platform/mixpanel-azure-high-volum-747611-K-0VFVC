@@ -9,7 +9,33 @@
   <body class="mixpanel-platform-body">
     <h1>Hello, World!</h1>
     <script>
-      // Run queries and display results here
+    var startParams = {
+      type:'general',
+      where:'(string(properties["ActionModifier"]) == "start")',
+      to_date:2015-09-24,
+      from_date:2015-08-26,
+      unit:'day'
+    }
+    var errorParams = {
+      type:'general',
+      where:'(string(properties["ActionModifier"]) == "cancel")',
+      on:'properties["ExtensionName"]',
+      to_date:2015-09-24,
+      from_date:2015-08-26,
+      unit:'day'
+    }
+    
+    var denominator = MP.api.segment('InitilializeExtensions', startParams)
+    var numerator = MP.api.segment('$custom_event:84493', errorParams) 
+    
+    $.when(denominator, numerator).done(function(divisor, dividend){
+          debugger;
+          var dauValues = dau.values();
+          var revenueValues = revenue.values();
+          var data = {
+              'ARPDAU': {
+              }
+          };// Run queries and display results here
     </script>
   </body>
 </html>
