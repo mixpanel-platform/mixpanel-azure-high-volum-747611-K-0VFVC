@@ -34,12 +34,12 @@
       console.log(data.values())
       
       debugger;
-      var chart = $('#chart').MPChart();
+      var chart = $('#chart');
       chart.MPChart('setData', data);
     });// Run queries and display results here
     
     $(document).ready(function() {
-      $('#chart').appendTo('body').MPChart({chartType: 'line', highchartsOptions: {
+      $('<div class="chart"></div>').appendTo('body').MPChart({chartType: 'line', highchartsOptions: {
           tooltip: {
               backgroundColor: '#fffce7'  // Make tooltip background yellow
           }
