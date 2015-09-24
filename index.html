@@ -12,6 +12,7 @@
     var startParams = {
       type:'general',
       where:'(string(properties["ActionModifier"]) == "start")',
+      on:'properties["ExtensionName"]',
       to:'2015-09-24',
       from:'2015-08-26',
       unit:'day'
@@ -30,6 +31,8 @@
     var numerator = MP.api.segment('$custom_event:84493', errorParams) 
     
     $.when(denominator, numerator).done(function(divisor, dividend){
+      divisor.divide(dividend);
+      console.log(dividend)
       debugger;
     });// Run queries and display results here
     </script>
