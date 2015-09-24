@@ -8,6 +8,8 @@
   </head>
   <body class="mixpanel-platform-body">
     <h1>Hello, World!</h1>
+    <div id='chart'></div>
+  
     <script>
     var startParams = {
       type:'general',
@@ -32,7 +34,7 @@
     $.when(denominator, numerator).done(function(divisor, dividend){
       var data = dividend.divide(divisor);
       console.log(data.values())
-      debugger;
+      $('#chart').MPChart(data);
     });// Run queries and display results here
     </script>
   </body>
