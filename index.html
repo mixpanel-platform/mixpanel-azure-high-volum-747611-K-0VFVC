@@ -8,8 +8,6 @@
   </head>
   <body class="mixpanel-platform-body">
     <h1>Hello, World!</h1>
-    <div id='chart'></div>
-  
     <script>
     var startParams = {
       type:'general',
@@ -39,6 +37,15 @@
       var chart = $('#chart').MPChart();
       chart.MPChart('setData', data);
     });// Run queries and display results here
+    
+    $(document).ready(function() {
+      $('#chart').appendTo('body').MPChart({chartType: 'line', highchartsOptions: {
+          tooltip: {
+              backgroundColor: '#fffce7'  // Make tooltip background yellow
+          }
+        }
+      });
+    });
     </script>
   </body>
 </html>
