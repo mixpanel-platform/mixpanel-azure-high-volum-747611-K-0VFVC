@@ -64,9 +64,9 @@
               for (date in divisor.values()[key]) {
                   var result = 0;
                    if (typeof dividend.values()[key] != 'undefined') {
-                     var divisorVal = dividend.values()[key][date];
-                     var dividendVal = divisor.values()[key][date];
-                     result = (1 - divisorVal / dividendVal) * 100;
+                     var numerator = dividend.values()[key][date];
+                     var denominator = divisor.values()[key][date];
+                     result = (1 - numerator / denominator) * 100;
                    }
                    // Validation where the graph broke because it tried to scale infinty
                    if (result == Infinity|| Number(result) != Number(result)){
