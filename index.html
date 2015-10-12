@@ -76,7 +76,7 @@
             
               // Set the key's date to the result
               data[key][date] = result;
-              if (result < min) {
+              if (result < min && result != 0) {
                 min = result
                 minExtension = key
               }
