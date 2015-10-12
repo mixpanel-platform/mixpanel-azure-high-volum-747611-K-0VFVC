@@ -82,25 +82,20 @@
               }
             };
           };
+          $('<div class="chart"></div>').appendTo('body').MPChart({chartType: 'line', highchartsOptions: {
+              yAxis: { 
+                min: min, 
+                max: 100,
+                tickAmount: 20,
+              }
+            }
+          });
           console.log(minExtension)
           var chart = $('.chart')
           chart.MPChart('setData', data);
         });
       }
-      
-      $(document).ready(function() {
-        $('<div class="chart"></div>').appendTo('body').MPChart({chartType: 'line', highchartsOptions: {
-            yAxis: { 
-              min: 95, 
-              max: 100,
-              tickAmount: 20,
-            }
-          }
-        });
-      });
-      
       $('#run').on('click', function(e){
-   
         runQuery();
       });
     </script>
