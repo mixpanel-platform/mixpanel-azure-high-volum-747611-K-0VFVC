@@ -58,25 +58,31 @@
         
         $.when(denominator, numerator).done(function(divisor, dividend){
           var data = {}
+          var min = 100
+          var minExtension = ''
           for (key in divisor.values()){
-              data[key] = {};
-              for (date in divisor.values()[key]) {
-                  var result = 0;
-                   if (typeof dividend.values()[key] != 'undefined') {
-                     var numerator = dividend.values()[key][date];
-                     var denominator = divisor.values()[key][date];
-                     result = (1 - numerator / denominator) * 100;
-                   }
-                   // Validation where the graph broke because it tried to scale infinty
-                   if (result == Infinity|| Number(result) != Number(result)){
-                     result = 0;
-                   }
-                  
-                   // Set the key's date to the result
-                   data[key][date] = result;
-                };
-             };
-          
+            data[key] = {};
+            for (date in divisor.values()[key]) {
+              var result = 0;
+              if (typeof dividend.values()[key] != 'undefined') {
+                var numerator = dividend.values()[key][date];
+                var denominator = divisor.values()[key][date];
+                result = (1 - numerator / denominator) * 100;
+              }
+              // Validation where the graph broke because it tried to scale infinty
+              if (result == Infinity|| Number(result) != Number(result)){
+               result = 0;
+              }
+            
+              // Set the key's date to the result
+              data[key][date] = result;
+              if (result < min) {
+                min = result
+                minExtension = key
+              }
+            };
+          };
+          console.log(minExtension)
           var chart = $('.chart')
           chart.MPChart('setData', data);
         });
