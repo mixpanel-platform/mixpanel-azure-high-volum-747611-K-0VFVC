@@ -80,7 +80,7 @@
           var chart = $('.chart').MPChart(
             {chartType: 'line', 
             highchartsOptions: {
-              min: 80,
+              yAxis: { min: 80, }
             }
           });
           chart.MPChart('setData', data);
