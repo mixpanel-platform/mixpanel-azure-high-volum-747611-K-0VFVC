@@ -58,7 +58,6 @@
         
         $.when(denominator, numerator).done(function(divisor, dividend){
           var data = {}
-          debugger
           for (key in divisor.values()){
               data[key] = {};
               for (date in divisor.values()[key]) {
@@ -78,7 +77,6 @@
                 };
              };
           
-          console.log(data.values())
           var chart = $('.chart');
           chart.MPChart('setData', data);
         });
