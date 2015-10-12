@@ -32,10 +32,12 @@
       <div style="clear:both"></div>
     </div>
     <script>
-      var dateSelector = $('#dateRange').MPDatepicker();
+      // Date Picker
+      $('#dateRange').MPDatepicker();
       
       runQuery = function() {
         dates = $('#dateRange').val();
+        // Set Params
         var startParams = {
           type:'general',
           where:'(string(properties["ActionModifier"]) == "start")',
@@ -44,7 +46,7 @@
           from:dates.from,
           unit:'day'
         }
-    
+        
         var errorParams = {
           type:'general',
           on:'properties["ExtensionName"]',
@@ -52,14 +54,21 @@
           from:dates.from,
           unit:'day'
         }
-        
+        // Make the two requests
         var denominator = MP.api.segment('InitializeExtensions', startParams)
         var numerator = MP.api.segment('$custom_event:84493', errorParams) 
-        
+        // Promises returned
         $.when(denominator, numerator).done(function(divisor, dividend){
           var data = {}
           var min = 100
           var minExtension = ''
+          /* Iterate through keys to do division
+            Segmentation Req returns like 
+            { 
+              "Blade A" : { Date : Val, Date2: Value},
+              "Blade A" : { Date : Val, Date2: Value},
+            } 
+          */
           for (key in divisor.values()){
             data[key] = {};
             for (date in divisor.values()[key]) {
@@ -69,19 +78,24 @@
                 var denominator = divisor.values()[key][date];
                 result = (1 - numerator / denominator) * 100;
               }
-              // Validation where the graph broke because it tried to scale infinty
+              // Validation where the graph broke because it tried to scale infinity
               if (result == Infinity|| Number(result) != Number(result)){
                result = 0;
               }
             
               // Set the key's date to the result
               data[key][date] = result;
+              
+              // Find the lowest result != 0 to test zoom
               if (result < min && result != 0) {
                 min = result
                 minExtension = key
               }
             };
           };
+          
+          // Chart options Zoom sets to lowest Blade Error Response
+          // Modify min to get deeper level of granularity
           $('<div class="chart"></div>').appendTo('body').MPChart({chartType: 'line', highchartsOptions: {
               yAxis: { 
                 min: min, 
@@ -90,7 +104,9 @@
               }
             }
           });
+          // Log the Extension with the Minimum we have seen
           console.log(minExtension)
+          // Get Chart and set the data
           var chart = $('.chart')
           chart.MPChart('setData', data);
         });
