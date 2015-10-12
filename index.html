@@ -33,7 +33,26 @@
     </div>
     <script>
       var dateSelector = $('#dateRange').MPDatepicker();
+      
       runQuery = function() {
+        dates = $('#dateRange').val();
+        var startParams = {
+          type:'general',
+          where:'(string(properties["ActionModifier"]) == "start")',
+          on:'properties["ExtensionName"]',
+          to: dates.to,
+          from:dates.from,
+          unit:'day'
+        }
+    
+        var errorParams = {
+          type:'general',
+          on:'properties["ExtensionName"]',
+          to: dates.to,
+          from:dates.from,
+          unit:'day'
+        }
+        
         var denominator = MP.api.segment('InitializeExtensions', startParams)
         var numerator = MP.api.segment('$custom_event:84493', errorParams) 
         
@@ -57,23 +76,7 @@
       });
       
       $('#run').on('click', function(e){
-        dates = $('#dateRange').val();
-        var startParams = {
-          type:'general',
-          where:'(string(properties["ActionModifier"]) == "start")',
-          on:'properties["ExtensionName"]',
-          to: dates.to,
-          from:dates.from,
-          unit:'day'
-        }
-    
-        var errorParams = {
-          type:'general',
-          on:'properties["ExtensionName"]',
-          to: dates.to,
-          from:dates.from,
-          unit:'day'
-        }
+   
         runQuery();
       });
     </script>
