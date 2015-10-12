@@ -7,46 +7,56 @@
     <script src="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.js"></script>
   </head>
   <body class="mixpanel-platform-body">
-    <div id="dateRange" style="float: left;"></div>
+     <div class="mixpanel-platform-section">
+      <div id="dateRange" style="float: left;"></div>
+      <button id="run" value="Run">Run</button>
+      <div style="clear:both"></div>
+    </div>
     <script>
-    var dateSelector = $('#dateRange').MPDatepicker();
-
-    var startParams = {
-      type:'general',
-      where:'(string(properties["ActionModifier"]) == "start")',
-      on:'properties["ExtensionName"]',
-
-      unit:'day'
-    }
-    
-    var errorParams = {
-      type:'general',
-      on:'properties["ExtensionName"]',
-      to: $('#dateRange').val().to,
-      from:$('#dateRange').val().from,
-      unit:'day'
-    }
-    
-    var denominator = MP.api.segment('InitializeExtensions', startParams)
-    var numerator = MP.api.segment('$custom_event:84493', errorParams) 
-    
-    $.when(denominator, numerator).done(function(divisor, dividend){
-      var data = dividend.divide(divisor);
-      console.log(data.values())
+      var dateSelector = $('#dateRange').MPDatepicker();
+      runQuery = function() {
+        var denominator = MP.api.segment('InitializeExtensions', startParams)
+        var numerator = MP.api.segment('$custom_event:84493', errorParams) 
+        
+        $.when(denominator, numerator).done(function(divisor, dividend){
+          var data = dividend.divide(divisor);
+          console.log(data.values())
+          
+          debugger;
+          var chart = $('.chart');
+          chart.MPChart('setData', data);
+        });// Run queries and display results here
+      }
       
-      debugger;
-      var chart = $('.chart');
-      chart.MPChart('setData', data);
-    });// Run queries and display results here
-    
-    $(document).ready(function() {
-      $('<div class="chart"></div>').appendTo('body').MPChart({chartType: 'line', highchartsOptions: {
-          tooltip: {
-              backgroundColor: '#fffce7'  // Make tooltip background yellow
+      $(document).ready(function() {
+        $('<div class="chart"></div>').appendTo('body').MPChart({chartType: 'line', highchartsOptions: {
+            tooltip: {
+                backgroundColor: '#fffce7'  // Make tooltip background yellow
+            }
           }
-        }
+        });
       });
-    });
+      
+      $('#run').on('click', function(e){
+        dates = $('#dateRange').val();
+        var startParams = {
+          type:'general',
+          where:'(string(properties["ActionModifier"]) == "start")',
+          on:'properties["ExtensionName"]',
+          to: dates.to,
+          from:dates.from,
+          unit:'day'
+        }
+    
+        var errorParams = {
+          type:'general',
+          on:'properties["ExtensionName"]',
+          to: dates.to,
+          from:dates.from,
+          unit:'day'
+        }
+        runQuery();
+      });
     </script>
   </body>
 </html>
