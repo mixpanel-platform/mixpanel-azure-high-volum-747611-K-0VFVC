@@ -7,22 +7,23 @@
     <script src="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.js"></script>
   </head>
   <body class="mixpanel-platform-body">
-    <h1>Hello, World!</h1>
+    <div id="dateRange" style="float: left;"></div>
     <script>
+    var dateSelector = $('#dateRange').MPDatepicker();
+
     var startParams = {
       type:'general',
       where:'(string(properties["ActionModifier"]) == "start")',
       on:'properties["ExtensionName"]',
-      to:'2015-08-28',
-      from:'2015-08-03',
+
       unit:'day'
     }
     
     var errorParams = {
       type:'general',
       on:'properties["ExtensionName"]',
-      to:'2015-08-28',
-      from:'2015-08-03',
+      to: $('#dateRange').val().to,
+      from:$('#dateRange').val().from,
       unit:'day'
     }
     
