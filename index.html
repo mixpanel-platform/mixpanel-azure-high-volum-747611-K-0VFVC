@@ -57,12 +57,32 @@
         var numerator = MP.api.segment('$custom_event:84493', errorParams) 
         
         $.when(denominator, numerator).done(function(divisor, dividend){
+          var data = {}
           debugger
-          var data = dividend.divide(divisor);
+          _.each(_.keys(divisor.values()), function(key){
+              data[key] = {};
+              _.each(_.keys(divisor.values()[key]), function(date){
+                  
+                  var result = 0;
+                   if (typeof rev.data.values[key] != 'undefined') {
+                     var divisorVal = rev.data.values[key][date];
+                     var dividendVal = dau.values()[key][date];
+                     result = 1 - divisorVal / dividendVal * 100;
+                   }
+                   // Validation where the graph broke because it tried to scale infinty
+                   if (result == Infinity|| Number(result) 1= Number(result)){
+                     result = 0;
+                   }
+                  
+                   // Set the key's date to the result
+                   data[key][date] = result;
+                });
+             });
+          
           console.log(data.values())
           var chart = $('.chart');
           chart.MPChart('setData', data);
-        });// Run queries and display results here
+        });
       }
       
       $(document).ready(function() {
