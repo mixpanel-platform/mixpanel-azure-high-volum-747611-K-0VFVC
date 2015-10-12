@@ -59,10 +59,9 @@
         $.when(denominator, numerator).done(function(divisor, dividend){
           var data = {}
           debugger
-          _.each(_.keys(divisor.values()), function(key){
+          for (key in divisor.values()){
               data[key] = {};
-              _.each(_.keys(divisor.values()[key]), function(date){
-                  
+              for (date in divisor.values()[key]) {
                   var result = 0;
                    if (typeof dividend.values()[key] != 'undefined') {
                      var divisorVal = dividend.values()[key][date];
