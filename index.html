@@ -77,23 +77,16 @@
                 };
              };
           
-          var chart = $('.chart').MPChart(
-            {chartType: 'line', 
-            highchartsOptions: {
-              yAxis: { 
-                min: 80, 
-                max: 100
-              }
-            }
-          });
+          var chart = $('.chart')
           chart.MPChart('setData', data);
         });
       }
       
       $(document).ready(function() {
         $('<div class="chart"></div>').appendTo('body').MPChart({chartType: 'line', highchartsOptions: {
-            tooltip: {
-                backgroundColor: '#fffce7'  // Make tooltip background yellow
+            yAxis: { 
+              min: 80, 
+              max: 100
             }
           }
         });
